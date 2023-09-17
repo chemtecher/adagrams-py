@@ -1,3 +1,6 @@
+from itertools import repeat
+import random
+
 LETTER_POOL = {
     'A': 9, 
     'B': 2, 
@@ -29,9 +32,18 @@ LETTER_POOL = {
 
 SCORE_CHART = {"A": 1, "E": 1, "I": 1, "O": 1, "U": 1, "L": 1, "N": 1 , "R": 1, "S": 1, "T": 1, "D": 2, "G": 2, "B": 3, "C": 3, "M": 3, "P":3, "F": 4, "H": 4, "V": 4, "W": 4, "Y": 4, "K": 5, "J": 8, "X": 8, "Q": 10, "Z": 10}
 
-
 def draw_letters():
-    pass
+    letters = []
+    letter_bank = []
+    for letter,count in LETTER_POOL.items():
+        letters.extend(repeat(letter, count))
+    
+    while len(letter_bank) < 10:
+        random_letter = random.choice(letters)
+        letter_bank.append(random_letter)
+        letters.remove(random_letter)
+    
+    return letter_bank
 
 def uses_available_letters(word, letter_bank):
     pass
