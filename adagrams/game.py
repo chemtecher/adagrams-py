@@ -70,7 +70,39 @@ def score_word(word):
         score += 8
     
     return score
-    
 
 def get_highest_word_score(word_list):
-    pass
+    word_scores = {}
+    
+    if len(word_list):
+        for word in word_list:
+            score = score_word(word)
+            word_scores[word] = score
+        top_score = max(word_scores.values())   
+        top_words = [word for word, score in word_scores.items() if score == top_score]
+        
+        winning_word = top_words[0]
+        if len(top_words) > 1:
+            for word in top_words:
+                # Case 1 
+                # already found 10 letter word, don't want to replace it
+                # check this case first to ensure a 10 letter word is not replaced with a shorter word
+                if len(winning_word) == 10:
+                    continue
+
+                # Case 2 
+                # found a 10 letter word that is longer than the currently stored winning word
+                elif len(word) == 10 and len(winning_word) != 10:
+                    winning_word = word
+
+                # Case 3
+                # winning_word is less than 10 letters and the current word is shorter
+                elif len(word) < len(winning_word):
+                    winning_word = word
+                
+                # Case 4 
+                # the string held by winning_word is not 10 letters
+                # and the current word is longer than winning word
+                # no action needed 
+
+    return (winning_word, top_score)
